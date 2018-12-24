@@ -7,6 +7,17 @@ var roundArrayElements = function (array) {
   }
 }
 
+// Ищем максимальное время попытки
+var getMaxElement = function (array) {
+  var maxElement = 0;
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] > maxElement) {
+      maxElement = array[i];
+    }
+  }
+  return maxElement;
+}
+
 window.renderStatistics = function (ctx, names, times) {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
   ctx.fillRect(110, 20, 420, 270);
@@ -22,18 +33,16 @@ window.renderStatistics = function (ctx, names, times) {
       histogramColWidth = 40,       //px
       histogramColBetween = 50,     //px
       histogramColColorUser = 'rgba(255, 0, 0, 1.0)',
-      histogramColColorOther = 'rgba(0, 0, 255, ' + Math.random() + ')';
+      histogramColColorOther = 'rgba(0, 0, 255, ' + Math.random() + ')',
+      histogramInitialX = 120,
+      histogramInitialY = 270,
+      histogramStep = 20;
 
   // Округляем время попытки до целого значения милисекунд
   roundArrayElements(times);
 
   // Ищем максимальное время попытки
-  var max = 0;
-  for (var i = 0; i < times.length; i++) {
-    if (times[i] > max) {
-      max = times[i];
-    }
-  }
+  var max = getMaxElement(times);
 
   // Получаем высоты столбцов гистограммы и строим гистограмму
   var histogramColHeight = 0;
@@ -44,8 +53,8 @@ window.renderStatistics = function (ctx, names, times) {
     } else {
       ctx.fillStyle = histogramColColorOther;
     }
-    ctx.fillRect(120 + i * histogramColBetween, 230, histogramColWidth, -histogramColHeight);
-    ctx.fillText(names[i], 120 + i * histogramColBetween, 250);
+    ctx.fillRect(histogramInitialX + i * histogramColBetween, histogramInitialY - histogramStep * 2, histogramColWidth, -histogramColHeight);
+    ctx.fillText(names[i], histogramInitialX + i * histogramColBetween, histogramInitialY - histogramStep);
   }
 
 };
