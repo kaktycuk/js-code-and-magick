@@ -7,7 +7,7 @@ var roundArrayElements = function (array) {
   }
 }
 
-// Ищем максимальное время попытки
+// Функция поиска элемента массива с наибольшим значением
 var getMaxElement = function (array) {
   var maxElement = 0;
   for (var i = 0; i < array.length; i++) {
@@ -29,14 +29,14 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Ура вы победили!', 120, 40);
   ctx.fillText('Список результатов:', 120, 60);
 
-  var histogramMaxHeight = 150,        //px
-      histogramColWidth = 40,       //px
-      histogramColBetween = 50,     //px
+  var histogramMaxHeight = 150, //px
+      histogramColWidth = 40,   //px
+      histogramColBetween = 50, //px
+      histogramInitialX = 120,  //px
+      histogramInitialY = 270,  //px
+      histogramStep = 20,       //px
       histogramColColorUser = 'rgba(255, 0, 0, 1.0)',
-      histogramColColorOther = 'rgba(0, 0, 255, ' + Math.random() + ')',
-      histogramInitialX = 120,
-      histogramInitialY = 270,
-      histogramStep = 20;
+      histogramColColorOther = 'rgba(0, 0, 255, ' + Math.random() + ')';
 
   // Округляем время попытки до целого значения милисекунд
   roundArrayElements(times);
@@ -56,5 +56,4 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillRect(histogramInitialX + i * histogramColBetween, histogramInitialY - histogramStep * 2, histogramColWidth, -histogramColHeight);
     ctx.fillText(names[i], histogramInitialX + i * histogramColBetween, histogramInitialY - histogramStep);
   }
-
 };
